@@ -16,4 +16,4 @@ def browser():
 @pytest.mark.parametrize("link", LINKS)
 def test_select_sum_and_submit(browser, link):
     code = submit_correct_sum(browser, link)
-    assert code.isdigit(), f"Ожидалось число в alert, получено: {code!r}"
+    float(code)

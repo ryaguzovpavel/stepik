@@ -24,8 +24,9 @@ LINKS = (
 
 
 def sum_numbers_on_page(driver: WebDriver) -> int:
-    numbers = driver.find_elements(By.CSS_SELECTOR, "h1 .nowrap")
-    return sum(int(span.text) for span in numbers)
+    first = int(driver.find_element(By.ID, "num1").text)
+    second = int(driver.find_element(By.ID, "num2").text)
+    return first + second
 
 
 def wait_for_select_options(driver: WebDriver, min_options: int = 6) -> None:
@@ -42,9 +43,9 @@ def submit_correct_sum(driver: WebDriver, link: str) -> str:
     Select(driver.find_element(By.TAG_NAME, "select")).select_by_value(str(total))
     driver.find_element(By.CSS_SELECTOR, ".btn").click()
     alert = WebDriverWait(driver, 5).until(EC.alert_is_present())
-    code = alert.text
+    message = alert.text
     alert.accept()
-    return code
+    return message.rsplit(": ", 1)[-1].strip()
 
 
 def main() -> None:
